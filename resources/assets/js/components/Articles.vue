@@ -10,6 +10,7 @@
       </div>
       <button type="submit" class="btn btn-light btn-block">Save</button>
     </form>
+    <button @click="clearForm()" class="btn btn-danger btn-block">Cancel</button>
     <nav aria-label="Page navigation example">
       <ul class="pagination">
         <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item"><a class="page-link" href="#" @click="fetchArticles(pagination.prev_page_url)">Previous</a></li>
@@ -96,8 +97,7 @@ export default {
         })
           .then(res => res.json())
           .then(data => {
-            this.article.title = '';
-            this.article.body = '';
+            this.clearForm();
             alert('Article Added');
             this.fetchArticles();
           })
@@ -113,8 +113,7 @@ export default {
         })
           .then(res => res.json())
           .then(data => {
-            this.article.title = '';
-            this.article.body = '';
+            this.clearForm();
             alert('Article Updated');
             this.fetchArticles();
           })
@@ -127,6 +126,13 @@ export default {
       this.article.article_id = article.id;
       this.article.title = article.title;
       this.article.body = article.body;
+    },
+    clearForm() {
+      this.edit = false;
+      this.article.id = null;
+      this.article.article_id = null;
+      this.article.title = '';
+      this.article.body = '';
     }
   }
 };
